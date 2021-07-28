@@ -14,7 +14,7 @@ class CreateContactsTable extends Migration
     public function up()
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
+            $table->bigIncrements('id');
             $table->string('fullname');
             $table->tinyInteger('gender');
             $table->string('email');
