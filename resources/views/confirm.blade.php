@@ -6,10 +6,72 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>内容確認</title>
+  <!-- スタイルシート読み込み -->
+  @if(app('env')=='local')
+  <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
+  <!-- <link rel="stylesheet" href="{{asset('/css/style.css')}}"> -->
+  @else
+  <link rel="stylesheet" href="{{secure_asset('/css/reset.css')}}">
+  <!-- <link rel="stylesheet" href="{{secure_asset('/css/style.css')}}"> -->
+  @endif
 </head>
 
 <body>
-  問い合わせ内容確認画面です
+  <main>
+    <h1>内容確認</h1>
+    <!-- メモ：form + input(hidden)で受け取ったデータを保持しておく -->
+    <form action="/thanks" method="post">
+      <table>
+        <tr>
+          <th>お名前</th>
+          <td>
+            family_name
+            first_name
+          </td>
+        </tr>
+        <tr>
+          <th>性別</th>
+          <td>
+            gender(1 or 2)
+          </td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td>
+            email
+          </td>
+        </tr>
+        <tr>
+          <th>郵便番号</th>
+          <td>
+            postcode
+          </td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td>
+            address
+          </td>
+        </tr>
+        <tr>
+          <th>建物名</th>
+          <td>
+            building
+          </td>
+        </tr>
+        <tr>
+          <th>ご意見</th>
+          <td>
+            opinion
+          </td>
+        </tr>
+      </table>
+      <input type="submit" value="送信" class="submit_send">
+      <p>
+        <a href="#">修正する</a>
+      </p>
+    </form>
+  </main>
 </body>
 
 </html>
