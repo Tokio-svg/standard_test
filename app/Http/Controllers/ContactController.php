@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -38,7 +39,7 @@ class ContactController extends Controller
         return view('contact', $inputs);
     }
     // 確認画面
-    public function confirm(Request $request)
+    public function confirm(ContactRequest $request)
     {
         $inputs = [
             'family_name' => $request->family_name,
@@ -89,7 +90,8 @@ class ContactController extends Controller
     // 管理システム検索結果表示
     public function search(Request $request)
     {
-        $items = Contact::where('gender', $request->gender)->Paginate(10);
+        $items = Contact::where('gender', $request->gender)->get();
+        $items->where('id', '>', 5)->get();
         $inputs = [
             'fullname' => $request->fullname,
             'gender' => $request->gender,

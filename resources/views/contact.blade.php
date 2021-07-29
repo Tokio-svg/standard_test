@@ -18,6 +18,9 @@
 
 <body>
   <main>
+    @if (count($errors) > 0)
+    <p>入力に問題があります</p>
+    @endif
     <h1>お問い合わせ</h1>
     <form action="/confirm" method="post" class="form__create">
       @csrf
