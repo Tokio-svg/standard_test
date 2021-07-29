@@ -18,9 +18,6 @@
 
 <body>
   <main>
-    @if (count($errors) > 0)
-    <p>入力に問題があります</p>
-    @endif
     <h1>お問い合わせ</h1>
     <form action="/confirm" method="post" class="form__create">
       @csrf
@@ -30,8 +27,14 @@
           <td>
             <input type="text" name="family_name" value="{{$family_name}}">
             <p>例）山田</p>
+            @error('family_name')
+            <p class="red">{{$message}}</p>
+            @enderror
             <input type="text" name="first_name" value="{{$first_name}}">
             <p>例）太郎</p>
+            @error('first_name')
+            <p class="red">{{$message}}</p>
+            @enderror
           </td>
         </tr>
         <tr>
@@ -44,13 +47,21 @@
             <input type="radio" name="gender" value="1">男性
             <input type="radio" name="gender" value="2" checked>女性
             @endif
+            @error('gender')
+            <p class="red">{{$message}}</p>
+            @enderror
           </td>
         </tr>
         <tr>
           <th>メールアドレス<span class="red">※</span></th>
           <td>
-            <input type="email" name="email" value="{{$email}}">
+            <input type="text" name="email" value="{{$email}}">
             <p>例）test@example.com</p>
+            @if ($errors->has('email'))
+            @foreach($errors->get('email') as $message)
+            <p class="red">{{$message}}</p>
+            @endforeach
+            @endif
           </td>
         </tr>
         <tr>
@@ -59,6 +70,11 @@
             <p>〒</p>
             <input type="text" name="postcode" value="{{$postcode}}">
             <p>例）123-4567</p>
+            @if ($errors->has('postcode'))
+            @foreach($errors->get('postcode') as $message)
+            <p class="red">{{$message}}</p>
+            @endforeach
+            @endif
           </td>
         </tr>
         <tr>
@@ -66,6 +82,9 @@
           <td>
             <input type="text" name="address" value="{{$address}}">
             <p>例）東京都渋谷区千駄ヶ谷1-2-3</p>
+            @error('address')
+            <p class="red">{{$message}}</p>
+            @enderror
           </td>
         </tr>
         <tr>
@@ -79,6 +98,11 @@
           <th>ご意見<span class="red">※</span></th>
           <td>
             <textarea name="opinion" id="opinion" cols="30" rows="10"></textarea>
+            @if ($errors->has('opinion'))
+            @foreach($errors->get('opinion') as $message)
+            <p class="red">{{$message}}</p>
+            @endforeach
+            @endif
           </td>
         </tr>
       </table>

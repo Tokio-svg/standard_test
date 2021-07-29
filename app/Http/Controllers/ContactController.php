@@ -14,7 +14,7 @@ class ContactController extends Controller
         $inputs = [
             'family_name' => '',
             'first_name' => '',
-            'gender' => '',
+            'gender' => 1,
             'email' => '',
             'postcode' => '',
             'address' => '',
