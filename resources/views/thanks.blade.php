@@ -9,17 +9,19 @@
   <!-- スタイルシート読み込み -->
   @if(app('env')=='local')
   <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{asset('/css/thanks_style.css')}}">
   @else
   <link rel="stylesheet" href="{{secure_asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{secure_asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{secure_asset('/css/thanks_style.css')}}">
   @endif
 </head>
 
 <body>
   <main>
-    <p>ご意見いただきありがとうございました。</p>
-    <a href="/">トップページへ</a>
+    <div class="content__wrap">
+      <p>ご意見いただきありがとうございました。</p>
+      <a href="/">トップページへ</a>
+    </div>
   </main>
 </body>
 

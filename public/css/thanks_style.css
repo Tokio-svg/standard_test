@@ -1,0 +1,27 @@
+main {
+    height: 100vh;
+    position: relative;
+    line-height: 1.2em;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    border: none;
+    width: 130px;
+    height: 35px;
+    line-height: 35px;
+    display: block;
+    margin: 40px auto;
+    background: rgb(0, 0, 0);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.content__wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

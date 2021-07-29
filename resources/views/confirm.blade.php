@@ -9,10 +9,10 @@
   <!-- スタイルシート読み込み -->
   @if(app('env')=='local')
   <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{asset('/css/confirm_style.css')}}">
   @else
   <link rel="stylesheet" href="{{secure_asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{secure_asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{secure_asset('/css/confirm_style.css')}}">
   @endif
 </head>
 
@@ -80,7 +80,7 @@
       <input type="hidden" name="building_name" value="{{$building_name}}">
       <input type="hidden" name="opinion" value="{{$opinion}}">
 
-      <input type="submit" value="送信">
+      <input type="submit" value="送信" class="submit__send">
     </form>
     <!-- 修正リンク -->
     <form action="/contact" method="post">
@@ -95,7 +95,7 @@
       <input type="hidden" name="building_name" value="{{$building_name}}">
       <input type="hidden" name="opinion" value="{{$opinion}}">
 
-      <input type="submit" value="修正する">
+      <input type="submit" value="修正する" class="submit__fix">
     </form>
   </main>
 </body>

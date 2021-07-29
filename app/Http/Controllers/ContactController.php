@@ -110,4 +110,24 @@ class ContactController extends Controller
         Contact::find($request->id)->delete();
         return redirect('/admin');
     }
+
+    // test用（後で消すこと）
+    public function confirmcheck(Request $request)
+    {
+        $inputs = [
+            'family_name' => '田所',
+            'first_name' => '浩司',
+            'gender' => 2,
+            'email' => 'test@mail.com',
+            'postcode' => '114-0514',
+            'address' => '下北沢',
+            'building_name' => '野獣邸',
+            'opinion' => 'まずうちさあ…屋上…あんだけど……焼いてかない？'
+        ];
+        return view('confirm', $inputs);
+    }
+    public function thanks(Request $request)
+    {
+        return view('thanks');
+    }
 }

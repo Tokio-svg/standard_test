@@ -24,28 +24,32 @@
       <table>
         <tr>
           <th>お名前<span class="red">※</span></th>
-          <td>
-            <input type="text" name="family_name" value="{{$family_name}}">
-            <p>例）山田</p>
-            @error('family_name')
-            <p class="red">{{$message}}</p>
-            @enderror
-            <input type="text" name="first_name" value="{{$first_name}}">
-            <p>例）太郎</p>
-            @error('first_name')
-            <p class="red">{{$message}}</p>
-            @enderror
+          <td class="td__flex">
+            <div class="name__wrap">
+              <input type="text" name="family_name" value="{{$family_name}}">
+              <p class="example">例）山田</p>
+              @error('family_name')
+              <p class="red">{{$message}}</p>
+              @enderror
+            </div>
+            <div class="name__wrap">
+              <input type="text" name="first_name" value="{{$first_name}}">
+              <p class="example">例）太郎</p>
+              @error('first_name')
+              <p class="red">{{$message}}</p>
+              @enderror
+            </div>
           </td>
         </tr>
         <tr>
           <th>性別<span class="red">※</span></th>
           <td>
             @if($gender === 1)
-            <input type="radio" name="gender" value="1" checked>男性
-            <input type="radio" name="gender" value="2">女性
+            <input type="radio" name="gender" value="1" class="input__gender" checked><span class="gender__text">男性</span>
+            <input type="radio" name="gender" value="2" class="input__gender"><span class="gender__text">女性</span>
             @else
-            <input type="radio" name="gender" value="1">男性
-            <input type="radio" name="gender" value="2" checked>女性
+            <input type="radio" name="gender" value="1" class="input__gender"><span class="gender__text">男性</span>
+            <input type="radio" name="gender" value="2" class="input__gender" checked><span class="gender__text">女性</span>
             @endif
             @error('gender')
             <p class="red">{{$message}}</p>
@@ -56,7 +60,7 @@
           <th>メールアドレス<span class="red">※</span></th>
           <td>
             <input type="text" name="email" value="{{$email}}">
-            <p>例）test@example.com</p>
+            <p class="example">例）test@example.com</p>
             @if ($errors->has('email'))
             @foreach($errors->get('email') as $message)
             <p class="red">{{$message}}</p>
@@ -66,22 +70,24 @@
         </tr>
         <tr>
           <th>郵便番号<span class="red">※</span></th>
-          <td>
+          <td class="td__flex">
             <p>〒</p>
-            <input type="text" name="postcode" value="{{$postcode}}">
-            <p>例）123-4567</p>
-            @if ($errors->has('postcode'))
-            @foreach($errors->get('postcode') as $message)
-            <p class="red">{{$message}}</p>
-            @endforeach
-            @endif
+            <div class="postcode__wrap">
+              <input type="text" name="postcode" value="{{$postcode}}">
+              <p class="example">例）123-4567</p>
+              @if ($errors->has('postcode'))
+              @foreach($errors->get('postcode') as $message)
+              <p class="red">{{$message}}</p>
+              @endforeach
+              @endif
+            </div>
           </td>
         </tr>
         <tr>
           <th>住所<span class="red">※</span></th>
           <td>
             <input type="text" name="address" value="{{$address}}">
-            <p>例）東京都渋谷区千駄ヶ谷1-2-3</p>
+            <p class="example">例）東京都渋谷区千駄ヶ谷1-2-3</p>
             @error('address')
             <p class="red">{{$message}}</p>
             @enderror
@@ -91,7 +97,7 @@
           <th>建物名</th>
           <td>
             <input type="text" name="building_name" value="{{$building_name}}">
-            <p>例）千駄ヶ谷マンション101</p>
+            <p class="example">例）千駄ヶ谷マンション101</p>
           </td>
         </tr>
         <tr>

@@ -22,3 +22,7 @@ Route::post('/create', [ContactController::class, 'create']);
 Route::get('/admin', [ContactController::class, 'admin']);
 Route::post('/admin', [ContactController::class, 'search']);
 Route::post('/delete', [ContactController::class, 'delete']);
+
+// test用（後で消すこと）
+Route::get('/confirm', [ContactController::class, 'confirmcheck']);
+Route::get('/thanks', [ContactController::class, 'thanks']);
