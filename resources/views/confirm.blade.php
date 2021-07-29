@@ -19,9 +19,8 @@
 <body>
   <main>
     <h1>内容確認</h1>
-    <!-- メモ：form + input(hidden)で受け取ったデータを保持しておく -->
-    <!-- $inputsの中に入力内容が含まれている -->
-    <form action="/thanks" method="post">
+    <form action="/create" method="post">
+      @csrf
       <table>
         <tr>
           <th>お名前</th>
@@ -33,7 +32,11 @@
         <tr>
           <th>性別</th>
           <td>
-            {{$gender}}
+            @if($gender === 1)
+            男性
+            @else
+            女性
+            @endif
           </td>
         </tr>
         <tr>
@@ -67,10 +70,32 @@
           </td>
         </tr>
       </table>
-      <input type="submit" value="送信" class="submit_send">
-      <p>
-        <a href="#">修正する</a>
-      </p>
+      <!-- 送信用hiddenフォーム -->
+      <input type="hidden" name="family_name" value="{{$family_name}}">
+      <input type="hidden" name="first_name" value="{{$first_name}}">
+      <input type="hidden" name="gender" value="{{$gender}}">
+      <input type="hidden" name="email" value="{{$email}}">
+      <input type="hidden" name="postcode" value="{{$postcode}}">
+      <input type="hidden" name="address" value="{{$address}}">
+      <input type="hidden" name="building_name" value="{{$building_name}}">
+      <input type="hidden" name="opinion" value="{{$opinion}}">
+
+      <input type="submit" value="送信">
+    </form>
+    <!-- 修正リンク -->
+    <form action="/contact" method="post">
+      @csrf
+      <!-- 送信用hiddenフォーム -->
+      <input type="hidden" name="family_name" value="{{$family_name}}">
+      <input type="hidden" name="first_name" value="{{$first_name}}">
+      <input type="hidden" name="gender" value="{{$gender}}">
+      <input type="hidden" name="email" value="{{$email}}">
+      <input type="hidden" name="postcode" value="{{$postcode}}">
+      <input type="hidden" name="address" value="{{$address}}">
+      <input type="hidden" name="building_name" value="{{$building_name}}">
+      <input type="hidden" name="opinion" value="{{$opinion}}">
+
+      <input type="submit" value="修正する">
     </form>
   </main>
 </body>

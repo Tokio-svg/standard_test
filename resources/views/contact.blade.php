@@ -25,23 +25,28 @@
         <tr>
           <th>お名前<span class="red">※</span></th>
           <td>
-            <input type="text" name="family_name">
+            <input type="text" name="family_name" value="{{$family_name}}">
             <p>例）山田</p>
-            <input type="text" name="first_name">
+            <input type="text" name="first_name" value="{{$first_name}}">
             <p>例）太郎</p>
           </td>
         </tr>
         <tr>
           <th>性別<span class="red">※</span></th>
           <td>
+            @if($gender === 1)
             <input type="radio" name="gender" value="1" checked>男性
             <input type="radio" name="gender" value="2">女性
+            @else
+            <input type="radio" name="gender" value="1">男性
+            <input type="radio" name="gender" value="2" checked>女性
+            @endif
           </td>
         </tr>
         <tr>
           <th>メールアドレス<span class="red">※</span></th>
           <td>
-            <input type="email" name="email">
+            <input type="email" name="email" value="{{$email}}">
             <p>例）test@example.com</p>
           </td>
         </tr>
@@ -49,34 +54,37 @@
           <th>郵便番号<span class="red">※</span></th>
           <td>
             <p>〒</p>
-            <input type="text" name="postcode">
+            <input type="text" name="postcode" value="{{$postcode}}">
             <p>例）123-4567</p>
           </td>
         </tr>
         <tr>
           <th>住所<span class="red">※</span></th>
           <td>
-            <input type="text" name="address">
+            <input type="text" name="address" value="{{$address}}">
             <p>例）東京都渋谷区千駄ヶ谷1-2-3</p>
           </td>
         </tr>
         <tr>
           <th>建物名</th>
           <td>
-            <input type="text" name="building_name">
+            <input type="text" name="building_name" value="{{$building_name}}">
             <p>例）千駄ヶ谷マンション101</p>
           </td>
         </tr>
         <tr>
           <th>ご意見<span class="red">※</span></th>
           <td>
-            <textarea name="opinion" id="" cols="30" rows="10"></textarea>
+            <textarea name="opinion" id="opinion" cols="30" rows="10"></textarea>
           </td>
         </tr>
       </table>
       <input type="submit" value="確認" class="submit_confirm">
     </form>
   </main>
+  <script>
+    document.getElementById("opinion").value = "{{$opinion}}";
+  </script>
 </body>
 
 </html>

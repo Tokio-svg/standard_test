@@ -3,14 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 
-// contact
-Route::get('/contact', [ContactController::class, 'contact']);
+// トップページ
+Route::get('/', function () {
+  return view('index');
+});
 
-// confirm
+// お問い合わせ画面
+Route::get('/contact', [ContactController::class, 'contact']);
+Route::post('/contact', [ContactController::class, 'fix']);
+
+// 確認画面
 Route::post('/confirm', [ContactController::class, 'confirm']);
 
-// test
-// Route::get('/confirm', [ContactController::class, 'confirm']);
-Route::get('/thanks', [ContactController::class, 'thanks']);
+// お問い合わせ保存、サンクスページ遷移
+Route::post('/create', [ContactController::class, 'create']);
+
+// 管理システム
 Route::get('/admin', [ContactController::class, 'admin']);
 Route::post('/admin', [ContactController::class, 'search']);
+Route::post('/delete', [ContactController::class, 'delete']);
