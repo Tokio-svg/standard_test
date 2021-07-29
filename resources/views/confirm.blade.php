@@ -20,49 +20,50 @@
   <main>
     <h1>内容確認</h1>
     <!-- メモ：form + input(hidden)で受け取ったデータを保持しておく -->
+    <!-- $inputsの中に入力内容が含まれている -->
     <form action="/thanks" method="post">
       <table>
         <tr>
           <th>お名前</th>
           <td>
-            family_name
-            first_name
+            {{$family_name}}
+            {{$first_name}}
           </td>
         </tr>
         <tr>
           <th>性別</th>
           <td>
-            gender(1 or 2)
+            {{$gender}}
           </td>
         </tr>
         <tr>
           <th>メールアドレス</th>
           <td>
-            email
+            {{$email}}
           </td>
         </tr>
         <tr>
           <th>郵便番号</th>
           <td>
-            postcode
+            {{$postcode}}
           </td>
         </tr>
         <tr>
           <th>住所</th>
           <td>
-            address
+            {{$address}}
           </td>
         </tr>
         <tr>
           <th>建物名</th>
           <td>
-            building
+            {{$building_name}}
           </td>
         </tr>
         <tr>
           <th>ご意見</th>
           <td>
-            opinion
+            {{$opinion}}
           </td>
         </tr>
       </table>

@@ -9,10 +9,10 @@
   <!-- スタイルシート読み込み -->
   @if(app('env')=='local')
   <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{asset('/css/admin_style.css')}}">
   @else
   <link rel="stylesheet" href="{{secure_asset('/css/reset.css')}}">
-  <!-- <link rel="stylesheet" href="{{secure_asset('/css/style.css')}}"> -->
+  <link rel="stylesheet" href="{{secure_asset('/css/admin_style.css')}}">
   @endif
 </head>
 
@@ -21,12 +21,13 @@
     <h1>管理システム</h1>
     <!-- 検索用入力フォーム -->
     <div class="search__wrap">
-      <form action="#" method="post">
+      <form action="/admin" method="post">
+        @csrf
         <table>
           <tr>
             <th>お名前</th>
             <td>
-              <input type="text" name="name">
+              <input type="text" name="fullname">
             </td>
             <th>性別</th>
             <td>
@@ -54,6 +55,7 @@
     </div>
     <!-- 検索結果表示 -->
     <div class="search_result">
+      {{$items->links()}}
       <table>
         <tr>
           <th>ID</th>
@@ -62,6 +64,16 @@
           <th>メールアドレス</th>
           <th>ご意見</th>
         </tr>
+        @foreach ($items as $item)
+        <tr>
+          <td>{{$item->id}}</td>
+          <td>{{$item->fullname}}</td>
+          <td>{{$item->gender}}</td>
+          <td>{{$item->email}}</td>
+          <td>{{$item->opinion}}</td>
+          <td>削除ボタン</td>
+        </tr>
+        @endforeach
       </table>
     </div>
   </main>

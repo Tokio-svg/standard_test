@@ -19,7 +19,7 @@
 <body>
   <main>
     <h1>お問い合わせ</h1>
-    <form action="/contact" method="post" class="form__create">
+    <form action="/confirm" method="post" class="form__create">
       @csrf
       <table>
         <tr>
@@ -63,7 +63,7 @@
         <tr>
           <th>建物名</th>
           <td>
-            <input type="text" name="building">
+            <input type="text" name="building_name">
             <p>例）千駄ヶ谷マンション101</p>
           </td>
         </tr>
