@@ -21,9 +21,8 @@
     <h1>管理システム</h1>
     <!-- 検索用入力フォーム -->
     <div class="search__wrap">
-      <form action="/admin" method="post">
-        @csrf
-        <table>
+      <form action="/admin/search" method="get">
+        <table class="input__table">
           <tr>
             <th>お名前</th>
             <td>
@@ -31,11 +30,11 @@
             </td>
             <th>性別</th>
             <td>
-              @if($inputs['gender'] === 1)
+              @if($inputs['gender'] == 1)
               <input type="radio" name="gender" value="3">全て
               <input type="radio" name="gender" value="1" checked>男性
               <input type="radio" name="gender" value="2">女性
-              @elseif($inputs['gender'] === 2)
+              @elseif($inputs['gender'] == 2)
               <input type="radio" name="gender" value="3">全て
               <input type="radio" name="gender" value="1">男性
               <input type="radio" name="gender" value="2" checked>女性
@@ -50,7 +49,7 @@
             <th>登録日</th>
             <td>
               <input type="date" name="date_start" value="{{$inputs['date_start']}}">~
-              <input type="date" name="data_end" value="{{$inputs['date_end']}}">
+              <input type="date" name="date_end" value="{{$inputs['date_end']}}">
             </td>
           </tr>
           <tr>
@@ -60,13 +59,13 @@
             </td>
           </tr>
         </table>
-        <input type="submit" value="検索">
-        <p>リセット</p>
+        <input type="submit" value="検索" class="submit__search">
+        <a href="/admin" class="a__reset">リセット</a>
       </form>
     </div>
     <!-- 検索結果表示 -->
-    <div class="search_result">
-      {{$items->links()}}
+    <div class="search__result">
+      {{$items->appends(request()->query())->links()}}
       <table>
         <tr>
           <th>ID</th>

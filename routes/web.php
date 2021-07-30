@@ -20,7 +20,7 @@ Route::post('/create', [ContactController::class, 'create']);
 
 // 管理システム
 Route::get('/admin', [ContactController::class, 'admin']);
-Route::post('/admin', [ContactController::class, 'search']);
+Route::get('/admin/search', [ContactController::class, 'search']);
 Route::post('/delete', [ContactController::class, 'delete']);
 
 // test用（後で消すこと）

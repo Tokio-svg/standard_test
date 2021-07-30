@@ -23,6 +23,7 @@ class ContactController extends Controller
         ];
         return view('contact', $inputs);
     }
+
     // お問い合わせ修正
     public function fix(Request $request)
     {
@@ -38,6 +39,7 @@ class ContactController extends Controller
         ];
         return view('contact', $inputs);
     }
+
     // 確認画面
     public function confirm(ContactRequest $request)
     {
@@ -53,6 +55,7 @@ class ContactController extends Controller
         ];
         return view('confirm', $inputs);
     }
+
     // お問い合わせ保存、サンクスページ遷移
     public function create(Request $request)
     {
@@ -71,6 +74,7 @@ class ContactController extends Controller
         $contact->save();
         return view('thanks');
     }
+
     // 管理システム
     public function admin(Request $request)
     {
@@ -87,23 +91,54 @@ class ContactController extends Controller
             'inputs' => $inputs
         ]);
     }
+
     // 管理システム検索結果表示
     public function search(Request $request)
     {
-        $items = Contact::where('gender', $request->gender)->get();
-        $items->where('id', '>', 5)->get();
+        // 入力情報を格納
         $inputs = [
-            'fullname' => $request->fullname,
-            'gender' => $request->gender,
-            'date_start' => $request->date_start,
-            'date_end' => $request->date_end,
-            'email' => $request->email,
+            'fullname' => $request->input('fullname'),
+            'gender' => $request->input('gender'),
+            'date_start' => $request->input('date_start'),
+            'date_end' => $request->input('date_end'),
+            'email' => $request->input('email'),
         ];
+
+        // 各項目検索
+        $query = Contact::query();
+
+        if (!empty($inputs['fullname'])) {
+            $query->where('fullname', 'LIKE', "%{$inputs['fullname']}%");
+        }
+
+        if (!empty($inputs['gender']) | $inputs['gender'] == 3) {
+            if ($inputs['gender'] == 3) {
+                $query->where('gender', '>', 0);
+            } else {
+                $query->where('gender', $inputs['gender']);
+            }
+        }
+
+        if (!empty($inputs['date_start'])) {
+            $query->where('created_at', '>=', $inputs['date_start']);
+        }
+
+        if (!empty($inputs['date_end'])) {
+            $query->where('created_at', '<=', $inputs['date_end']);
+        }
+
+        if (!empty($inputs['email'])) {
+            $query->where('email', 'LIKE', "%{$inputs['email']}%");
+        }
+
+        $items = $query->paginate(10);
+
         return view('admin', [
             'items' => $items,
             'inputs' => $inputs
         ]);
     }
+
     // 管理システムお問い合わせ削除
     public function delete(Request $request)
     {
