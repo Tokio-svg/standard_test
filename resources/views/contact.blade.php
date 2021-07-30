@@ -73,13 +73,15 @@
           <td class="td__flex">
             <p>〒</p>
             <div class="postcode__wrap">
-              <input type="text" name="postcode" value="{{$postcode}}">
+              <input type="text" name="postcode" id="postcode" value="{{$postcode}}">
               <p class="example">例）123-4567</p>
+              <!-- エラーメッセージ -->
               @if ($errors->has('postcode'))
               @foreach($errors->get('postcode') as $message)
               <p class="red">{{$message}}</p>
               @endforeach
               @endif
+              <p id="error_postcode" class="red hidden">郵便番号は数字とハイフンからなる8文字を入力してください</p>
             </div>
           </td>
         </tr>
@@ -116,7 +118,44 @@
     </form>
   </main>
   <script>
+    // リクエストからご意見の値を設定
     document.getElementById("opinion").value = "{{$opinion}}";
+
+    // 郵便番号入力欄がフォーカスを失った時に
+    // (1)全角を半角に変換
+    // (2)郵便番号かどうかチェック
+    // (3)不正な入力の場合はエラーメッセージタグのクラスを切り替えて表示させる
+    const postcode = document.getElementById("postcode");
+    const postcodeError = document.getElementById("error_postcode");
+    postcode.addEventListener('blur', function() {
+      this.value = toHalfSize(this.value);
+      if (!isPostcode(this.value)) {
+        if (postcodeError.classList.contains('hidden')) {
+          postcodeError.classList.remove('hidden');
+        }
+      } else {
+        if (!postcodeError.classList.contains('hidden')) {
+          postcodeError.classList.add('hidden');
+        }
+      }
+    });
+
+    // 全角の数字と‐,－,―を半角に変換する
+    function toHalfSize(str) {
+      return str.replace(/[０-９]/g, function(s) {
+          return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+        })
+        .replace(/[‐－―]/g, "-");
+    }
+
+    // 郵便番号かどうかチェックする（真偽値で返す）
+    function isPostcode(str) {
+      if (str.match(/^\d{3}-\d{4}$/)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   </script>
 </body>
 

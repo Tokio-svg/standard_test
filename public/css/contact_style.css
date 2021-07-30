@@ -47,6 +47,9 @@ textarea {
 .red {
     color: red;
 }
+.hidden {
+    display: none;
+}
 .example {
     color: rgb(165, 165, 165);
 }
