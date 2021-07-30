@@ -143,7 +143,8 @@ class ContactController extends Controller
     public function delete(Request $request)
     {
         Contact::find($request->id)->delete();
-        return redirect('/admin');
+        $url = $request->input('url');
+        return redirect($url);
     }
 
     // test用（後で消すこと）

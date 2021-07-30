@@ -86,11 +86,22 @@
             @endif
           </td>
           <td>{{$item->email}}</td>
-          <td>{{$item->opinion}}</td>
+          <td>
+            <?php
+            if (mb_strlen($item->opinion) >= 25) {
+              $short = mb_substr($item->opinion, 0, 25);
+              echo $short . '...';
+            } else {
+              echo $item->opinion;
+            }
+            ?>
+          </td>
           <td>
             <form action="/delete" method="post">
               @csrf
+              <!-- 削除対象のidと現在のURLをpost送信 -->
               <input type="hidden" name="id" value="{{$item->id}}">
+              <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
               <input type="submit" value="削除">
             </form>
           </td>
