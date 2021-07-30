@@ -26,7 +26,7 @@
           <tr>
             <th>お名前</th>
             <td>
-              <input type="text" name="fullname" value="{{$inputs['fullname']}}">
+              <input type="text" name="fullname" value="{{$inputs['fullname']}}" class="input__text">
             </td>
             <th>性別</th>
             <td>
@@ -48,14 +48,14 @@
           <tr>
             <th>登録日</th>
             <td>
-              <input type="date" name="date_start" value="{{$inputs['date_start']}}">~
-              <input type="date" name="date_end" value="{{$inputs['date_end']}}">
+              <input type="date" name="date_start" value="{{$inputs['date_start']}}" class="input__text">~
+              <input type="date" name="date_end" value="{{$inputs['date_end']}}" class="input__text">
             </td>
           </tr>
           <tr>
             <th>メールアドレス</th>
             <td>
-              <input type="text" name="email" value="{{$inputs['email']}}">
+              <input type="text" name="email" value="{{$inputs['email']}}" class="input__text">
             </td>
           </tr>
         </table>
@@ -65,14 +65,15 @@
     </div>
     <!-- 検索結果表示 -->
     <div class="search__result">
-      {{$items->appends(request()->query())->links()}}
-      <table>
+      {{$items->appends(request()->query())->links('vendor.pagination.custom')}}
+      <table class="result__table">
         <tr>
           <th>ID</th>
           <th>お名前</th>
           <th>性別</th>
           <th>メールアドレス</th>
           <th>ご意見</th>
+          <th></th>
         </tr>
         @foreach ($items as $item)
         <tr>
@@ -102,7 +103,7 @@
               <!-- 削除対象のidと現在のURLをpost送信 -->
               <input type="hidden" name="id" value="{{$item->id}}">
               <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-              <input type="submit" value="削除">
+              <input type="submit" value="削除" class="submit__delete">
             </form>
           </td>
         </tr>

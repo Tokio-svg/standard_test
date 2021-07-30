@@ -13,6 +13,14 @@ h1 {
     font-size: 20px;
     margin: 20px auto;
 }
+.input__text {
+    border: 1.5px solid rgb(165, 165, 165);
+    border-radius: 4px;
+    height: 30px;
+    width: 200px;
+    margin: 0 20px;
+    padding: 0 10px;
+}
 .input__table td,
 .input__table th {
     height: 60px;
@@ -20,14 +28,15 @@ h1 {
 }
 .search__wrap {
     border: 1px solid black;
-    padding: 30px;
+    padding: 30px 50px;
+    margin-bottom: 20px;
 }
 .submit__search {
     border: none;
     width: 130px;
     height: 35px;
     display: block;
-    margin: 20px auto;
+    margin: 0 auto;
     background: rgb(0, 0, 0);
     color: white;
     cursor: pointer;
@@ -37,4 +46,54 @@ h1 {
     width: 100px;
     margin: auto;
     color: black;
+}
+.search__result {
+    width: 100%;
+    text-align: left;
+}
+.result__table {
+    width: 100%;
+}
+.result__table th {
+    border-bottom: 1px solid black;
+}
+.result__table td {
+    border-bottom: 1px solid rgb(233, 233, 233);
+}
+.result__table th,
+.result__table td {
+    height: 30px;
+    line-height: 30px;
+}
+.result__table tr th:first-of-type,
+.result__table tr td:first-of-type {
+    width: 10%;
+    padding-left: 40px;
+}
+.result__table tr th:nth-of-type(2),
+.result__table tr td:nth-of-type(2) {
+    width: 10%;
+}
+.result__table tr th:nth-of-type(3),
+.result__table tr td:nth-of-type(3) {
+    width: 10%;
+}
+.result__table tr th:nth-of-type(4),
+.result__table tr td:nth-of-type(4) {
+    width: 20%;
+}
+.result__table tr th:nth-of-type(5),
+.result__table tr td:nth-of-type(5) {
+    width: 40%;
+}
+.submit__delete {
+    border: none;
+    width: 60px;
+    height: 24px;
+    display: block;
+    background: rgb(0, 0, 0);
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: auto;
 }
