@@ -88,17 +88,22 @@
           </td>
           <td>{{$item->email}}</td>
           <td>
-            <?php
-            if (mb_strlen($item->opinion) >= 25) {
-              $short = mb_substr($item->opinion, 0, 25);
-              echo $short . '...';
-            } else {
-              echo $item->opinion;
-            }
-            ?>
+            <div style="position: relative;">
+              <p id="opinion_{{$item->id}}" onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)">
+                <?php
+                if (mb_strlen($item->opinion) >= 25) {
+                  $short = mb_substr($item->opinion, 0, 25);
+                  echo $short . '...';
+                } else {
+                  echo $item->opinion;
+                }
+                ?>
+              </p>
+              <div class="popup">{{$item->opinion}}</div>
+            </div>
           </td>
           <td>
-            <form action="/delete" method="post">
+            <form action="/delete" method="post" onsubmit="return confirmDelete()">
               @csrf
               <!-- 削除対象のidと現在のURLをpost送信 -->
               <input type="hidden" name="id" value="{{$item->id}}">
@@ -111,6 +116,28 @@
       </table>
     </div>
   </main>
+  <script>
+    // 関数：削除の確認ダイアログを表示
+    function confirmDelete() {
+      if (!window.confirm("削除します。よろしいですか？")) {
+        return false;
+      }
+    }
+
+    // 関数：マウスオーバーで次の要素を表示
+    function mouseOver(id) {
+      const content = document.getElementById(id);
+      content.nextElementSibling.style.visibility = "visible";
+      // content.nextElementSibling.style.display = "block";
+    }
+
+    // 関数：マウスアウトで次の要素を非表示
+    function mouseOut(id) {
+      const content = document.getElementById(id);
+      content.nextElementSibling.style.visibility = "hidden";
+      // content.nextElementSibling.style.display = "none";
+    }
+  </script>
 </body>
 
 </html>

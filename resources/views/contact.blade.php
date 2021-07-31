@@ -19,7 +19,8 @@
 <body>
   <main>
     <h1>お問い合わせ</h1>
-    <form action="/confirm" method="post" class="form__create">
+    <form action="/confirm" method="post" class="form__create h-adr">
+      <span class="p-country-name" style="display:none;">Japan</span>
       @csrf
       <table>
         <tr>
@@ -73,7 +74,7 @@
           <td class="td__flex">
             <p>〒</p>
             <div class="postcode__wrap">
-              <input type="text" name="postcode" id="postcode" value="{{$postcode}}">
+              <input type="text" name="postcode" id="postcode" class="p-postal-code" value="{{$postcode}}">
               <p class="example">例）123-4567</p>
               <!-- エラーメッセージ -->
               @if ($errors->has('postcode'))
@@ -88,7 +89,7 @@
         <tr>
           <th>住所<span class="red">※</span></th>
           <td>
-            <input type="text" name="address" value="{{$address}}">
+            <input type="text" name="address" value="{{$address}}" class="p-region p-locality p-street-address p-extended-address">
             <p class="example">例）東京都渋谷区千駄ヶ谷1-2-3</p>
             @error('address')
             <p class="red">{{$message}}</p>
@@ -140,7 +141,7 @@
       }
     });
 
-    // 全角の数字と‐,－,―を半角に変換する
+    // 関数：全角の数字と‐,－,―を半角に変換する
     function toHalfSize(str) {
       return str.replace(/[０-９]/g, function(s) {
           return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
@@ -148,7 +149,7 @@
         .replace(/[‐－―]/g, "-");
     }
 
-    // 郵便番号かどうかチェックする（真偽値で返す）
+    // 関数：郵便番号かどうかチェックする（真偽値で返す）
     function isPostcode(str) {
       if (str.match(/^\d{3}-\d{4}$/)) {
         return true;
@@ -157,6 +158,9 @@
       }
     }
   </script>
+  <!-- 住所の自動入力にYubinBangoライブラリを使用 -->
+  <!-- URL: https://github.com/yubinbango/yubinbango -->
+  <script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
 </body>
 
 </html>
