@@ -103,7 +103,7 @@
         <tr>
           <th>郵便番号<span class="red">※</span></th>
           <td class="td__flex">
-            <p>〒</p>
+            <p class="postmark">〒</p>
             <div class="postcode__wrap">
               <!-- リダイレクト時はoldの内容を格納する -->
               <?php
@@ -150,7 +150,7 @@
               $building_name = old('building_name');
             }
             ?>
-            <input type="text" name="building_name" value="{{$building_name}}">
+            <input type="text" name="building_name" id="building_name" value="{{$building_name}}">
             <p class="example">例）千駄ヶ谷マンション101</p>
           </td>
         </tr>
