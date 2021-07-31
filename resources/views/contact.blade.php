@@ -19,7 +19,7 @@
 <body>
   <main>
     <h1>お問い合わせ</h1>
-    <form action="/confirm" method="post" class="form__create h-adr">
+    <form action="/confirm" method="post" class="form__create h-adr" onsubmit="return false;">
       <span class="p-country-name" style="display:none;">Japan</span>
       @csrf
       <table>
@@ -89,7 +89,7 @@
               $email = old('email');
             }
             ?>
-            <input type="email" name="email" id="email" value="{{$email}}" onblur="validateRequire(this.id,'error_email')">
+            <input type="email" name="email" id="email" value="{{$email}}" onblur="validateRequire(this.id,'error_email');validateEmail()">
             <p class="example">例）test@example.com</p>
             <!-- エラーメッセージ -->
             @if ($errors->has('email'))
@@ -98,6 +98,7 @@
             @endforeach
             @endif
             <p id="error_email" class="red" style="display: none;">メールアドレスを入力してください</p>
+            <p id="error_email-type" class="red" style="display: none;">メールアドレスの形式で入力してください</p>
           </td>
         </tr>
         <tr>
@@ -111,7 +112,7 @@
                 $postcode = old('postcode');
               }
               ?>
-              <input type="text" name="postcode" id="postcode" class="p-postal-code" value="{{$postcode}}" maxlength="8">
+              <input type="text" name="postcode" id="postcode" class="p-postal-code" value="{{$postcode}}" maxlength="8" onblur="validatePostcode()">
               <p class="example">例）123-4567</p>
               <!-- エラーメッセージ -->
               @if ($errors->has('postcode'))
@@ -119,7 +120,7 @@
               <p class="red">{{$message}}</p>
               @endforeach
               @endif
-              <p id="error_postcode" class="red hidden">郵便番号は数字とハイフンからなる8文字を入力してください</p>
+              <p id="error_postcode" class="red" style="display: none;">郵便番号は数字とハイフンからなる8文字を入力してください</p>
             </div>
           </td>
         </tr>
@@ -157,7 +158,7 @@
         <tr>
           <th>ご意見<span class="red">※</span></th>
           <td>
-            <textarea name="opinion" id="opinion" onblur="validateRequire(this.id,'error_opinion')"></textarea>
+            <textarea name="opinion" id="opinion" onblur="validateRequire(this.id,'error_opinion')" oninput="validateMax(this.id)"></textarea>
             <!-- エラーメッセージ -->
             @if ($errors->has('opinion'))
             @foreach($errors->get('opinion') as $message)
@@ -165,10 +166,11 @@
             @endforeach
             @endif
             <p id="error_opinion" class="red" style="display: none;">ご意見を入力してください</p>
+            <p id="error_opinion-max" class="red" style="display: none;">ご意見は120文字以内に収めてください</p>
           </td>
         </tr>
       </table>
-      <input type="submit" value="確認" class="submit_confirm">
+      <input type="button" value="確認" class="submit_confirm" onclick="submit()">
     </form>
   </main>
   <script>
@@ -180,7 +182,7 @@
       document.getElementById("opinion").value = "{{$opinion}}";
     }
 
-    // 入力必須バリデーション
+    // 関数：入力必須バリデーション
     function validateRequire(id, errorId) {
       const input = document.getElementById(id).value;
       if (!input) {
@@ -189,25 +191,32 @@
         document.getElementById(errorId).style.display = "none";
       }
     }
-    // 郵便番号バリデーション
+
+    // 関数：メールアドレス形式バリデーション
+    // 1文字以上 @ 1文字以上 . 1文字以上の形の文字列をメールアドレス形式とする
+    function validateEmail() {
+      const input = document.getElementById("email").value;
+      if (!input.match(/.+@.+\..+/)) {
+        document.getElementById('error_email-type').style.display = "block";
+      } else {
+        document.getElementById('error_email-type').style.display = "none";
+      }
+    }
+
+    // 関数：郵便番号バリデーション
     // 入力欄がフォーカスを失った時に
     // (1)全角を半角に変換
     // (2)郵便番号かどうかチェック
     // (3)不正な入力の場合はエラーメッセージタグのクラスを切り替えて表示させる
-    const postcode = document.getElementById("postcode");
-    const postcodeError = document.getElementById("error_postcode");
-    postcode.addEventListener('blur', function() {
-      this.value = toHalfSize(this.value);
-      if (!isPostcode(this.value)) {
-        if (postcodeError.classList.contains('hidden')) {
-          postcodeError.classList.remove('hidden');
-        }
+    function validatePostcode() {
+      const input = document.getElementById("postcode").value;
+      input = toHalfSize(input);
+      if (!isPostcode(input)) {
+        document.getElementById('error_postcode').style.display = "block";
       } else {
-        if (!postcodeError.classList.contains('hidden')) {
-          postcodeError.classList.add('hidden');
-        }
+        document.getElementById('error_postcode').style.display = "none";
       }
-    });
+    }
 
     // 関数：全角の数字と‐,－,―を半角に変換する
     function toHalfSize(str) {
@@ -223,6 +232,16 @@
         return true;
       } else {
         return false;
+      }
+    }
+
+    // 関数：ご意見の入力値に変化があったら文字数をカウントして120文字を超えていたらエラーメッセージを表示する
+    function validateMax(id) {
+      const input = document.getElementById(id);
+      if (input.value.length > 120) {
+        document.getElementById('error_opinion-max').style.display = "block";
+      } else {
+        document.getElementById('error_opinion-max').style.display = "none";
       }
     }
   </script>

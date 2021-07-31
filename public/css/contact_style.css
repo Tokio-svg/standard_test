@@ -30,6 +30,7 @@ input,
 textarea {
     border: 1.5px solid rgb(165, 165, 165);
     border-radius: 4px;
+    padding: 5px;
 }
 input {
     height: 30px;

@@ -31,17 +31,17 @@
             <th>性別</th>
             <td>
               @if($inputs['gender'] == 1)
-              <input type="radio" name="gender" value="3">全て
-              <input type="radio" name="gender" value="1" checked>男性
-              <input type="radio" name="gender" value="2">女性
+              <input type="radio" name="gender" class="input__gender" value="3">全て
+              <input type="radio" name="gender" class="input__gender" value="1" checked>男性
+              <input type="radio" name="gender" class="input__gender" value="2">女性
               @elseif($inputs['gender'] == 2)
-              <input type="radio" name="gender" value="3">全て
-              <input type="radio" name="gender" value="1">男性
-              <input type="radio" name="gender" value="2" checked>女性
+              <input type="radio" name="gender" class="input__gender" value="3">全て
+              <input type="radio" name="gender" class="input__gender" value="1">男性
+              <input type="radio" name="gender" class="input__gender" value="2" checked>女性
               @else
-              <input type="radio" name="gender" value="3" checked>全て
-              <input type="radio" name="gender" value="1">男性
-              <input type="radio" name="gender" value="2">女性
+              <input type="radio" name="gender" class="input__gender" value="3" checked>全て
+              <input type="radio" name="gender" class="input__gender" value="1">男性
+              <input type="radio" name="gender" class="input__gender" value="2">女性
               @endif
             </td>
           </tr>
@@ -60,7 +60,9 @@
           </tr>
         </table>
         <input type="submit" value="検索" class="submit__search">
-        <a href="/admin" class="a__reset">リセット</a>
+        <div class="a__reset--wrap">
+          <a href="/admin" class="a__reset">リセット</a>
+        </div>
       </form>
     </div>
     <!-- 検索結果表示 -->

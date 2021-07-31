@@ -14,12 +14,17 @@ h1 {
     margin: 20px auto;
 }
 .input__text {
-    border: 1.5px solid rgb(165, 165, 165);
+    border: 2px solid rgb(212, 212, 212);
     border-radius: 4px;
-    height: 30px;
-    width: 200px;
+    height: 40px;
+    width: 250px;
     margin: 0 20px;
     padding: 0 10px;
+}
+.input__gender {
+    width: 30px;
+    height: 30px;
+    margin: auto 8px auto 25px;
 }
 .input__table td,
 .input__table th {
@@ -36,20 +41,23 @@ h1 {
     width: 130px;
     height: 35px;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 10px;
     background: rgb(0, 0, 0);
     color: white;
     cursor: pointer;
     border-radius: 5px;
 }
 .a__reset {
-    width: 100px;
-    margin: auto;
     color: black;
+}
+.a__reset--wrap {
+    width: fit-content;
+    margin: auto;
 }
 .search__result {
     width: 100%;
     text-align: left;
+    border-bottom: 1px solid black;
 }
 .result__table {
     width: 100%;
