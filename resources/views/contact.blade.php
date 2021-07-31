@@ -27,24 +27,46 @@
           <th>お名前<span class="red">※</span></th>
           <td class="td__flex">
             <div class="name__wrap">
-              <input type="text" name="family_name" value="{{$family_name}}">
+              <!-- リダイレクト時はoldの内容を格納する -->
+              <?php
+              if (!is_null(old('family_name'))) {
+                $family_name = old('family_name');
+              }
+              ?>
+              <input type="text" name="family_name" id="family_name" value="{{$family_name}}" onblur="validateRequire(this.id,'error_family_name')">
               <p class="example">例）山田</p>
+              <!-- エラーメッセージ -->
               @error('family_name')
               <p class="red">{{$message}}</p>
               @enderror
+              <p id="error_family_name" class="red" style="display: none;">苗字を入力してください</p>
             </div>
             <div class="name__wrap">
-              <input type="text" name="first_name" value="{{$first_name}}">
+              <!-- リダイレクト時はoldの内容を格納する -->
+              <?php
+              if (!is_null(old('first_name'))) {
+                $first_name = old('first_name');
+              }
+              ?>
+              <input type="text" name="first_name" id="first_name" value="{{$first_name}}" onblur="validateRequire(this.id,'error_first_name')">
               <p class="example">例）太郎</p>
+              <!-- エラーメッセージ -->
               @error('first_name')
               <p class="red">{{$message}}</p>
               @enderror
+              <p id="error_first_name" class="red" style="display: none;">名前を入力してください</p>
             </div>
           </td>
         </tr>
         <tr>
           <th>性別<span class="red">※</span></th>
           <td>
+            <!-- リダイレクト時はoldの内容を格納する -->
+            <?php
+            if (!is_null(old('gender'))) {
+              $gender = old('gender');
+            }
+            ?>
             @if($gender === 1)
             <input type="radio" name="gender" value="1" class="input__gender" checked><span class="gender__text">男性</span>
             <input type="radio" name="gender" value="2" class="input__gender"><span class="gender__text">女性</span>
@@ -52,6 +74,7 @@
             <input type="radio" name="gender" value="1" class="input__gender"><span class="gender__text">男性</span>
             <input type="radio" name="gender" value="2" class="input__gender" checked><span class="gender__text">女性</span>
             @endif
+            <!-- エラーメッセージ -->
             @error('gender')
             <p class="red">{{$message}}</p>
             @enderror
@@ -60,13 +83,21 @@
         <tr>
           <th>メールアドレス<span class="red">※</span></th>
           <td>
-            <input type="text" name="email" value="{{$email}}">
+            <!-- リダイレクト時はoldの内容を格納する -->
+            <?php
+            if (!is_null(old('email'))) {
+              $email = old('email');
+            }
+            ?>
+            <input type="email" name="email" id="email" value="{{$email}}" onblur="validateRequire(this.id,'error_email')">
             <p class="example">例）test@example.com</p>
+            <!-- エラーメッセージ -->
             @if ($errors->has('email'))
             @foreach($errors->get('email') as $message)
             <p class="red">{{$message}}</p>
             @endforeach
             @endif
+            <p id="error_email" class="red" style="display: none;">メールアドレスを入力してください</p>
           </td>
         </tr>
         <tr>
@@ -74,7 +105,13 @@
           <td class="td__flex">
             <p>〒</p>
             <div class="postcode__wrap">
-              <input type="text" name="postcode" id="postcode" class="p-postal-code" value="{{$postcode}}">
+              <!-- リダイレクト時はoldの内容を格納する -->
+              <?php
+              if (!is_null(old('postcode'))) {
+                $postcode = old('postcode');
+              }
+              ?>
+              <input type="text" name="postcode" id="postcode" class="p-postal-code" value="{{$postcode}}" maxlength="8">
               <p class="example">例）123-4567</p>
               <!-- エラーメッセージ -->
               @if ($errors->has('postcode'))
@@ -89,16 +126,30 @@
         <tr>
           <th>住所<span class="red">※</span></th>
           <td>
-            <input type="text" name="address" value="{{$address}}" class="p-region p-locality p-street-address p-extended-address">
+            <!-- リダイレクト時はoldの内容を格納する -->
+            <?php
+            if (!is_null(old('address'))) {
+              $address = old('address');
+            }
+            ?>
+            <input type="text" name="address" value="{{$address}}" id="address" class="p-region p-locality p-street-address p-extended-address" onblur="validateRequire(this.id,'error_address')">
             <p class="example">例）東京都渋谷区千駄ヶ谷1-2-3</p>
+            <!-- エラーメッセージ -->
             @error('address')
             <p class="red">{{$message}}</p>
             @enderror
+            <p id="error_address" class="red" style="display: none;">住所を入力してください</p>
           </td>
         </tr>
         <tr>
           <th>建物名</th>
           <td>
+            <!-- リダイレクト時はoldの内容を格納する -->
+            <?php
+            if (!is_null(old('building_name'))) {
+              $building_name = old('building_name');
+            }
+            ?>
             <input type="text" name="building_name" value="{{$building_name}}">
             <p class="example">例）千駄ヶ谷マンション101</p>
           </td>
@@ -106,12 +157,14 @@
         <tr>
           <th>ご意見<span class="red">※</span></th>
           <td>
-            <textarea name="opinion" id="opinion" cols="30" rows="10"></textarea>
+            <textarea name="opinion" id="opinion" onblur="validateRequire(this.id,'error_opinion')"></textarea>
+            <!-- エラーメッセージ -->
             @if ($errors->has('opinion'))
             @foreach($errors->get('opinion') as $message)
             <p class="red">{{$message}}</p>
             @endforeach
             @endif
+            <p id="error_opinion" class="red" style="display: none;">ご意見を入力してください</p>
           </td>
         </tr>
       </table>
@@ -120,9 +173,24 @@
   </main>
   <script>
     // リクエストからご意見の値を設定
-    document.getElementById("opinion").value = "{{$opinion}}";
+    // リダイレクト時はoldの内容を格納する
+    if ("{{old('opinion')}}") {
+      document.getElementById("opinion").value = "{{old('opinion')}}";
+    } else {
+      document.getElementById("opinion").value = "{{$opinion}}";
+    }
 
-    // 郵便番号入力欄がフォーカスを失った時に
+    // 入力必須バリデーション
+    function validateRequire(id, errorId) {
+      const input = document.getElementById(id).value;
+      if (!input) {
+        document.getElementById(errorId).style.display = "block";
+      } else {
+        document.getElementById(errorId).style.display = "none";
+      }
+    }
+    // 郵便番号バリデーション
+    // 入力欄がフォーカスを失った時に
     // (1)全角を半角に変換
     // (2)郵便番号かどうかチェック
     // (3)不正な入力の場合はエラーメッセージタグのクラスを切り替えて表示させる
