@@ -67,7 +67,7 @@
     </div>
     <!-- 検索結果表示 -->
     <div class="search__result">
-      {{$items->appends(request()->query())->links('vendor.pagination.custom')}}
+      {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
       <table class="result__table">
         <tr>
           <th>ID</th>

@@ -39,7 +39,10 @@
               @error('family_name')
               <p class="red">{{$message}}</p>
               @enderror
+              <!-- Laravelのエラーメッセージが表示されていない場合は入力時エラーメッセージを表示する -->
+              @if (!$errors->has('family_name'))
               <p id="error_family_name" class="red" style="display: none;">苗字を入力してください</p>
+              @endif
             </div>
             <div class="name__wrap">
               <!-- リダイレクト時はoldの内容を格納する -->
@@ -54,7 +57,10 @@
               @error('first_name')
               <p class="red">{{$message}}</p>
               @enderror
+              <!-- Laravelのエラーメッセージが表示されていない場合は入力時エラーメッセージを表示する -->
+              @if (!$errors->has('first_name'))
               <p id="error_first_name" class="red" style="display: none;">名前を入力してください</p>
+              @endif
             </div>
           </td>
         </tr>
@@ -97,8 +103,29 @@
             <p class="red">{{$message}}</p>
             @endforeach
             @endif
-            <p id="error_email" class="red" style="display: none;">メールアドレスを入力してください</p>
-            <p id="error_email-type" class="red" style="display: none;">メールアドレスの形式で入力してください</p>
+            <!-- Laravelのemailに関するエラーが無い、
+            もしくはエラーはあるが該当するルールのエラーが無い場合は入力時エラーメッセージを表示する -->
+            <?php
+            $require = false;
+            $email = false;
+            if ($errors->has('email')) {
+              $text = '';
+              foreach ($errors->get('email') as $message) {
+                $text .= $message;
+              }
+              if (strpos($text, '形式') === false) {
+                $email = true;
+              } else {
+                $require = true;
+              }
+            }
+            if (!$errors->has('email') || $require === true) {
+              echo "<p id='error_email' class='red' style='display: none;'>メールアドレスを入力してください</p>";
+            }
+            if (!$errors->has('email') || $email === true) {
+              echo "<p id='error_email-type' class='red' style='display: none;'>メールアドレスの形式で入力してください</p>";
+            }
+            ?>
           </td>
         </tr>
         <tr>
@@ -139,7 +166,10 @@
             @error('address')
             <p class="red">{{$message}}</p>
             @enderror
+            <!-- Laravelのエラーメッセージが表示されていない場合は入力時エラーメッセージを表示する -->
+            @if (!$errors->has('address'))
             <p id="error_address" class="red" style="display: none;">住所を入力してください</p>
+            @endif
           </td>
         </tr>
         <tr>
@@ -184,22 +214,37 @@
 
     // 関数：入力必須バリデーション
     function validateRequire(id, errorId) {
+      const errorMessage = document.getElementById(errorId);
+      // 該当のエラーメッセージ要素が存在しない場合は終了
+      if (!errorMessage) {
+        return;
+      }
       const input = document.getElementById(id).value;
       if (!input) {
-        document.getElementById(errorId).style.display = "block";
+        errorMessage.style.display = "block";
       } else {
-        document.getElementById(errorId).style.display = "none";
+        errorMessage.style.display = "none";
       }
     }
 
     // 関数：メールアドレス形式バリデーション
     // 1文字以上 @ 1文字以上 . 1文字以上の形の文字列をメールアドレス形式とする
     function validateEmail() {
+      const errorMessage = document.getElementById('error_email-type');
+      // 該当のエラーメッセージ要素が存在しない場合は終了
+      if (!errorMessage) {
+        return;
+      }
       const input = document.getElementById("email").value;
+      // 未入力の場合は終了
+      if (!input) {
+        errorMessage.style.display = "none"
+        return;
+      }
       if (!input.match(/.+@.+\..+/)) {
-        document.getElementById('error_email-type').style.display = "block";
+        errorMessage.style.display = "block";
       } else {
-        document.getElementById('error_email-type').style.display = "none";
+        errorMessage.style.display = "none";
       }
     }
 
