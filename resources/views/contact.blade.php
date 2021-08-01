@@ -73,7 +73,7 @@
               $gender = old('gender');
             }
             ?>
-            @if($gender === 1)
+            @if($gender == 1)
             <input type="radio" name="gender" value="1" class="input__gender" checked><span class="gender__text">男性</span>
             <input type="radio" name="gender" value="2" class="input__gender"><span class="gender__text">女性</span>
             @else
@@ -106,23 +106,17 @@
             <!-- Laravelのemailに関するエラーが無い、
             もしくはエラーはあるが該当するルールのエラーが無い場合は入力時エラーメッセージを表示する -->
             <?php
-            $require = false;
-            $email = false;
             if ($errors->has('email')) {
-              $text = '';
-              foreach ($errors->get('email') as $message) {
-                $text .= $message;
-              }
-              if (strpos($text, '形式') === false) {
-                $email = true;
-              } else {
-                $require = true;
-              }
+              $require = displayError($errors->has('email'), $errors->get('email'), 'を');
+              $emailType = displayError($errors->has('email'), $errors->get('email'), '形式');
+            } else {
+              $require = true;
+              $emailType = true;
             }
-            if (!$errors->has('email') || $require === true) {
+            if ($require) {
               echo "<p id='error_email' class='red' style='display: none;'>メールアドレスを入力してください</p>";
             }
-            if (!$errors->has('email') || $email === true) {
+            if ($emailType) {
               echo "<p id='error_email-type' class='red' style='display: none;'>メールアドレスの形式で入力してください</p>";
             }
             ?>
@@ -147,7 +141,18 @@
               <p class="red">{{$message}}</p>
               @endforeach
               @endif
-              <p id="error_postcode" class="red" style="display: none;">郵便番号は数字とハイフンからなる8文字を入力してください</p>
+              <!-- Laravelのpostcodeに関するエラーが無い、
+              もしくはエラーはあるが該当するルールのエラーが無い場合は入力時エラーメッセージを表示する -->
+              <?php
+              if ($errors->has('postcode')) {
+                $postcodeType = displayError($errors->has('postcode'), $errors->get('postcode'), '8');
+              } else {
+                $postcodeType = true;
+              }
+              if ($postcodeType) {
+                echo "<p id='error_postcode' class='red' style='display: none;'>郵便番号は数字とハイフンからなる8文字を入力してください</p>";
+              }
+              ?>
             </div>
           </td>
         </tr>
@@ -195,14 +200,44 @@
             <p class="red">{{$message}}</p>
             @endforeach
             @endif
-            <p id="error_opinion" class="red" style="display: none;">ご意見を入力してください</p>
-            <p id="error_opinion-max" class="red" style="display: none;">ご意見は120文字以内に収めてください</p>
+            <?php
+            if ($errors->has('opinion')) {
+              $require = displayError($errors->has('opinion'), $errors->get('opinion'), '入力');
+              $max = displayError($errors->has('opinion'), $errors->get('opinion'), '文字');
+            } else {
+              $require = true;
+              $max = true;
+            }
+            if ($require) {
+              echo "<p id='error_opinion' class='red' style='display: none;'>ご意見を入力してください</p>";
+            }
+            if ($max) {
+              echo "<p id='error_opinion-max' class='red' style='display: none;'>ご意見は120文字以内に収めてください</p>";
+            }
+            ?>
           </td>
         </tr>
       </table>
       <input type="button" value="確認" class="submit_confirm" onclick="submit()">
     </form>
   </main>
+  <!-- 関数：$errorsの値からエラーメッセージ表示の可否を判定する -->
+  <?php
+  function displayError($has, $errors, $str)
+  {
+    $text = "";
+    if ($has) {
+      foreach ($errors as $message) {
+        $text .= $message;
+      }
+    }
+    if (!$has || strpos($text, $str) === false) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  ?>
   <script>
     // リクエストからご意見の値を設定
     // リダイレクト時はoldの内容を格納する
@@ -236,11 +271,12 @@
         return;
       }
       const input = document.getElementById("email").value;
-      // 未入力の場合は終了
+      // 未入力の場合はエラーメッセージを非表示にして終了
       if (!input) {
         errorMessage.style.display = "none"
         return;
       }
+      // メールアドレス形式かどうかチェックして表示を切り替え
       if (!input.match(/.+@.+\..+/)) {
         errorMessage.style.display = "block";
       } else {
@@ -254,8 +290,14 @@
     // (2)郵便番号かどうかチェック
     // (3)不正な入力の場合はエラーメッセージタグのクラスを切り替えて表示させる
     function validatePostcode() {
-      const input = document.getElementById("postcode").value;
+      let input = document.getElementById("postcode").value;
       input = toHalfSize(input);
+      document.getElementById("postcode").value = input;
+      const errorMessage = document.getElementById('error_postcode');
+      // 該当のエラーメッセージ要素が存在しない場合は終了
+      if (!errorMessage) {
+        return;
+      }
       if (!isPostcode(input)) {
         document.getElementById('error_postcode').style.display = "block";
       } else {
@@ -282,11 +324,16 @@
 
     // 関数：ご意見の入力値に変化があったら文字数をカウントして120文字を超えていたらエラーメッセージを表示する
     function validateMax(id) {
+      const errorMessage = document.getElementById('error_opinion-max');
+      // 該当のエラーメッセージ要素が存在しない場合は終了
+      if (!errorMessage) {
+        return;
+      }
       const input = document.getElementById(id);
       if (input.value.length > 120) {
-        document.getElementById('error_opinion-max').style.display = "block";
+        errorMessage.style.display = "block";
       } else {
-        document.getElementById('error_opinion-max').style.display = "none";
+        errorMessage.style.display = "none";
       }
     }
   </script>
