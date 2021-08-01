@@ -65,7 +65,7 @@
           </td>
         </tr>
         <tr>
-          <th>性別<span class="red">※</span></th>
+          <th class="th__gender">性別<span class="red">※</span></th>
           <td>
             <!-- リダイレクト時はoldの内容を格納する -->
             <?php

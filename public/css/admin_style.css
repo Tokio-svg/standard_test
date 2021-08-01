@@ -1,5 +1,6 @@
 main {
-    width: 90%;
+    width: 80%;
+    min-width: 1200px;
     margin: 0 auto;
     line-height: 1.2em;
     font-size: 13px;
@@ -28,7 +29,7 @@ h1 {
     text-align: left;
 }
 .search__wrap {
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 30px 50px;
     margin-bottom: 20px;
 }
@@ -53,13 +54,14 @@ h1 {
 .search__result {
     width: 100%;
     text-align: left;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 .result__table {
     width: 100%;
+    margin-top: 10px;
 }
 .result__table th {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
 }
 .result__table td {
     border-bottom: 1px solid rgb(233, 233, 233);
@@ -100,16 +102,6 @@ h1 {
     cursor: pointer;
     border-radius: 5px;
     margin: auto;
-}
-.popup {
-    position: absolute;
-    top: 0;
-    left: 0;
-    visibility: hidden;
-    background-color: #fffadd;
-    border: 1px solid black;
-    z-index: 1000;
-    /* display: none; */
 }
 /* pagination */
 .pagination__wrap {

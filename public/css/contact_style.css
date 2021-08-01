@@ -1,5 +1,6 @@
 main {
     width: 35%;
+    min-width: 550px;
     margin: 0 auto;
     padding: 30px;
     line-height: 1.2em;
@@ -18,9 +19,12 @@ table {
 }
 th {
     width: 25%;
-    padding: 10px 0;
+    padding: 22px 0 0;
     text-align: left;
     vertical-align: top;
+}
+.th__gender {
+    padding-top: 16px;
 }
 td {
     width: 75%;
@@ -28,7 +32,7 @@ td {
 }
 input,
 textarea {
-    border: 1.5px solid rgb(165, 165, 165);
+    border: 2px solid rgb(212, 212, 212);
     border-radius: 4px;
     padding: 5px;
 }
@@ -40,7 +44,7 @@ textarea {
     height: 150px;
 }
 .name__wrap {
-    width: 48%;
+    width: 47%;
 }
 #family_name,
 #first_name {
@@ -57,14 +61,17 @@ textarea {
 .postmark {
     line-height: 30px;
     font-weight: bold;
-    padding: 4px 10px;
+    padding: 8px 12px 4px;
+    vertical-align: middle;
 }
 .input__gender {
     width: 30px;
     height: 30px;
+    margin: auto;
 }
 .gender__text {
-    margin: 0 20px 0 10px;
+    margin: 0 25px 0 10px;
+    vertical-align: middle;
 }
 .td__flex {
     display: flex;

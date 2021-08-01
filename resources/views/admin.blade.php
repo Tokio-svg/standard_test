@@ -90,19 +90,17 @@
           </td>
           <td>{{$item->email}}</td>
           <td>
-            <div style="position: relative;">
-              <p id="opinion_{{$item->id}}" onmouseover="mouseOver(this.id)" onmouseout="mouseOut(this.id)">
-                <?php
-                if (mb_strlen($item->opinion) >= 25) {
-                  $short = mb_substr($item->opinion, 0, 25);
-                  echo $short . '...';
-                } else {
-                  echo $item->opinion;
-                }
-                ?>
-              </p>
-              <div class="popup">{{$item->opinion}}</div>
-            </div>
+            <p id="opinion_{{$item->id}}" onmouseover="exchangeText(this.id)" onmouseout="exchangeText(this.id)">
+              <?php
+              if (mb_strlen($item->opinion) >= 25) {
+                $short = mb_substr($item->opinion, 0, 25);
+                echo $short . '...';
+              } else {
+                echo $item->opinion;
+              }
+              ?>
+            </p>
+            <div style="display: none;">{{$item->opinion}}</div>
           </td>
           <td>
             <form action="/delete" method="post" onsubmit="return confirmDelete()">
@@ -126,18 +124,14 @@
       }
     }
 
-    // 関数：マウスオーバーで次の要素を表示
-    function mouseOver(id) {
-      const content = document.getElementById(id);
-      content.nextElementSibling.style.visibility = "visible";
-      // content.nextElementSibling.style.display = "block";
-    }
+    // 関数：引数のidを持つ要素と次の要素のtextContentを入れ替える
+    function exchangeText(id) {
+      const element = document.getElementById(id);
+      const tmp = element.textContent;
+      const nextElement = element.nextElementSibling;
 
-    // 関数：マウスアウトで次の要素を非表示
-    function mouseOut(id) {
-      const content = document.getElementById(id);
-      content.nextElementSibling.style.visibility = "hidden";
-      // content.nextElementSibling.style.display = "none";
+      element.textContent = nextElement.textContent;
+      nextElement.textContent = tmp;
     }
   </script>
 </body>
