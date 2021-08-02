@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>トップページ</title>
+  <title>Standardタームテスト（Laravel）</title>
   <!-- スタイルシート読み込み -->
   @if(app('env')=='local')
   <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
@@ -15,10 +15,15 @@
   <style>
     main {
       width: 35%;
+      height: 100vh;
       margin: 0 auto;
-      padding: 30px;
       line-height: 1.2em;
       text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 20px;
     }
 
     a {
@@ -35,14 +40,23 @@
       line-height: 35px;
       font-size: 13px;
     }
+
+    .wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   </style>
 </head>
 
 <body>
   <main>
-    <h1>トップページ</h1>
-    <a href="/contact">お問い合わせ画面へ</a>
-    <a href="/admin">管理システムへ</a>
+    <div class="wrap">
+      <h1>トップページ</h1>
+      <a href="/contact">お問い合わせ画面へ</a>
+      <a href="/admin">管理システムへ</a>
+    </div>
   </main>
 </body>
 

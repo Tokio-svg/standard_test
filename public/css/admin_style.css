@@ -107,6 +107,10 @@ h1 {
     border-radius: 5px;
     margin: auto;
 }
+.submit__delete:hover {
+    background: rgb(255, 142, 142);
+    color: black;
+}
 /* pagination */
 .pagination__wrap {
     display: flex;
