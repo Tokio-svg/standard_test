@@ -21,15 +21,13 @@
     <h1>管理システム</h1>
     <!-- 検索用入力フォーム -->
     <div class="search__wrap">
-      <form action="/admin/search" method="get">
+      <form action="/admin/search" method="get" onsubmit="return false;">
         <table class="input__table">
           <tr>
             <th>お名前</th>
             <td>
               <input type="text" name="fullname" value="{{$inputs['fullname']}}" class="input__text">
-            </td>
-            <th>性別</th>
-            <td>
+              <span class="item-name">性別</span>
               @if($inputs['gender'] == 1)
               <input type="radio" name="gender" class="input__gender" value="3">全て
               <input type="radio" name="gender" class="input__gender" value="1" checked>男性
@@ -59,7 +57,7 @@
             </td>
           </tr>
         </table>
-        <input type="submit" value="検索" class="submit__search">
+        <input type="submit" value="検索" class="submit__search" onclick="submit()">
         <div class="a__reset--wrap">
           <a href="/admin" class="a__reset">リセット</a>
         </div>

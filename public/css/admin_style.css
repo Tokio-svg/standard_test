@@ -21,12 +21,16 @@ h1 {
 .input__gender {
     width: 30px;
     height: 30px;
-    margin: auto 8px auto 25px;
+    margin: auto 8px auto 30px;
 }
 .input__table td,
 .input__table th {
     height: 60px;
     text-align: left;
+}
+.item-name {
+    font-weight: bold;
+    margin-left: 15px;
 }
 .search__wrap {
     border: 2px solid black;

@@ -104,7 +104,7 @@
             @endforeach
             @endif
             <!-- Laravelのemailに関するエラーが無い、
-            もしくはエラーはあるが該当するルールのエラーが無い場合は入力時エラーメッセージを表示する -->
+            もしくはエラーはあるが該当するルールのエラーが無い場合はJSのエラーメッセージを表示する -->
             <?php
             if ($errors->has('email')) {
               $require = displayError($errors->has('email'), $errors->get('email'), 'を');
@@ -142,7 +142,7 @@
               @endforeach
               @endif
               <!-- Laravelのpostcodeに関するエラーが無い、
-              もしくはエラーはあるが該当するルールのエラーが無い場合は入力時エラーメッセージを表示する -->
+              もしくはエラーはあるが該当するルールのエラーが無い場合はJSのエラーメッセージを表示する -->
               <?php
               if ($errors->has('postcode')) {
                 $postcodeType = displayError($errors->has('postcode'), $errors->get('postcode'), '8');
@@ -171,7 +171,7 @@
             @error('address')
             <p class="red">{{$message}}</p>
             @enderror
-            <!-- Laravelのエラーメッセージが表示されていない場合は入力時エラーメッセージを表示する -->
+            <!-- Laravelのエラーメッセージが表示されていない場合はJSのエラーメッセージを表示する -->
             @if (!$errors->has('address'))
             <p id="error_address" class="red" style="display: none;">住所を入力してください</p>
             @endif
@@ -193,7 +193,7 @@
         <tr>
           <th>ご意見<span class="red">※</span></th>
           <td>
-            <textarea name="opinion" id="opinion" onblur="validateRequire(this.id,'error_opinion')" oninput="validateMax(this.id)"></textarea>
+            <textarea name="opinion" id="opinion" maxlength="120" onblur="validateRequire(this.id,'error_opinion')" oninput="validateMax(this.id)"></textarea>
             <!-- エラーメッセージ -->
             @if ($errors->has('opinion'))
             @foreach($errors->get('opinion') as $message)
@@ -288,7 +288,7 @@
     // 入力欄がフォーカスを失った時に
     // (1)全角を半角に変換
     // (2)郵便番号かどうかチェック
-    // (3)不正な入力の場合はエラーメッセージタグのクラスを切り替えて表示させる
+    // (3)エラーメッセージ要素のクラスを変更して表示を切り替える
     function validatePostcode() {
       let input = document.getElementById("postcode").value;
       input = toHalfSize(input);
