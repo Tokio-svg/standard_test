@@ -32,7 +32,7 @@
         <tr>
           <th>性別</th>
           <td>
-            @if($gender === 1)
+            @if($gender == 1)
             男性
             @else
             女性
